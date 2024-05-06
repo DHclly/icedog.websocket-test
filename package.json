@@ -1,0 +1,24 @@
+{
+  "name": "websocket-test",
+  "description": "test the websocket connection count",
+  "private": true,
+  "scripts": {
+    "t01s": "node test01/server.js",
+    "t01c": "node test01/client.js",
+    "t02s": "node test02/server.js",
+    "t02c": "node test02/client.js",
+    "t03s": "node test03/server.js",
+    "t03c": "node test03/client.js",
+    "t04s": "node test04/server.js",
+    "t05s": "node test05/server.js",
+    "t06s": "node test06/server.js",
+    "t07s": "node test07/server.js",
+    "t08s": "node test08/server.js",
+    "t09s": "node test09/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.16.0"
+  }
+}

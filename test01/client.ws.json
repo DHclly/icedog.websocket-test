@@ -1,0 +1,147 @@
+{
+    "_events": {},
+    "_eventsCount": 4,
+    "_binaryType": "nodebuffer",
+    "_closeCode": 1006,
+    "_closeFrameReceived": false,
+    "_closeFrameSent": false,
+    "_closeMessage": {
+      "type": "Buffer",
+      "data": []
+    },
+    "_closeTimer": null,
+    "_extensions": {},
+    "_paused": false,
+    "_protocol": "",
+    "_readyState": 1,
+    "_receiver": {
+      "_events": {},
+      "_writableState": {
+        "highWaterMark": 16384,
+        "length": 46,
+        "corked": 0,
+        "writelen": 46,
+        "bufferedIndex": 0,
+        "pendingcb": 1
+      },
+      "_allowSynchronousEvents": false,
+      "_binaryType": "nodebuffer",
+      "_extensions": {},
+      "_isServer": false,
+      "_maxPayload": 104857600,
+      "_skipUTF8Validation": false,
+      "_bufferedBytes": 0,
+      "_buffers": [],
+      "_compressed": false,
+      "_payloadLength": 44,
+      "_fragmented": 0,
+      "_masked": false,
+      "_fin": true,
+      "_opcode": 1,
+      "_totalPayloadLength": 0,
+      "_messageLength": 0,
+      "_fragments": [],
+      "_errored": false,
+      "_loop": false,
+      "_state": 6,
+      "_eventsCount": 6
+    },
+    "_sender": {
+      "_extensions": {},
+      "_socket": {
+        "connecting": false,
+        "_hadError": false,
+        "_parent": null,
+        "_host": "localhost",
+        "_closeAfterHandlingError": false,
+        "_events": {
+          "end": [
+            null,
+            null
+          ]
+        },
+        "_readableState": {
+          "highWaterMark": 16384,
+          "buffer": [],
+          "bufferIndex": 0,
+          "length": 0,
+          "pipes": [],
+          "awaitDrainWriters": null
+        },
+        "_writableState": {
+          "highWaterMark": 16384,
+          "length": 0,
+          "corked": 0,
+          "writelen": 0,
+          "bufferedIndex": 0,
+          "pendingcb": 0
+        },
+        "allowHalfOpen": false,
+        "_eventsCount": 4,
+        "_sockname": null,
+        "_pendingData": null,
+        "_pendingEncoding": "",
+        "server": null,
+        "_server": null,
+        "parser": null,
+        "_httpMessage": null,
+        "autoSelectFamilyAttemptedAddresses": [
+          "::1:3000"
+        ],
+        "timeout": 0
+      },
+      "_firstFragment": true,
+      "_compress": false,
+      "_bufferedBytes": 0,
+      "_deflating": false,
+      "_queue": []
+    },
+    "_socket": {
+      "connecting": false,
+      "_hadError": false,
+      "_parent": null,
+      "_host": "localhost",
+      "_closeAfterHandlingError": false,
+      "_events": {
+        "end": [
+          null,
+          null
+        ]
+      },
+      "_readableState": {
+        "highWaterMark": 16384,
+        "buffer": [],
+        "bufferIndex": 0,
+        "length": 0,
+        "pipes": [],
+        "awaitDrainWriters": null
+      },
+      "_writableState": {
+        "highWaterMark": 16384,
+        "length": 0,
+        "corked": 0,
+        "writelen": 0,
+        "bufferedIndex": 0,
+        "pendingcb": 0
+      },
+      "allowHalfOpen": false,
+      "_eventsCount": 4,
+      "_sockname": null,
+      "_pendingData": null,
+      "_pendingEncoding": "",
+      "server": null,
+      "_server": null,
+      "parser": null,
+      "_httpMessage": null,
+      "autoSelectFamilyAttemptedAddresses": [
+        "::1:3000"
+      ],
+      "timeout": 0
+    },
+    "_bufferedAmount": 0,
+    "_isServer": false,
+    "_redirects": 0,
+    "_autoPong": true,
+    "_url": "ws://localhost:3000/",
+    "_req": null
+  }

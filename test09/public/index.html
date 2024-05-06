@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ws 服务 和 http 服务集成测试</title>
+    <link href="./css/index.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <div id="app">
+        <div class="title">ws 服务 和 http 服务集成测试</div>
+        <div class="desc">请按 F12 查看控制台</div>
+        <pre>
+          WebSocket 的 readyState 属性表示当前 WebSocket 的连接状态，它可能的取值有以下几种：
+          WebSocket.CONNECTING（值为 0）：表示正在连接中。
+          WebSocket.OPEN（值为 1）：表示连接已打开，可以进行通信。
+          WebSocket.CLOSING（值为 2）：表示连接正在关闭。
+          WebSocket.CLOSED（值为 3）：表示连接已关闭。
+
+        </pre>
+    </div>
+    <script type="importmap">
+        {
+          "imports": {
+            "js/tool":"./js/tool.mjs"
+          }
+        }
+      </script>
+    <script src="js/index.mjs" type="module"></script>
+</body>
+</html>
