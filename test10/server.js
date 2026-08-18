@@ -17,8 +17,10 @@ const createHttpServerWithWSServer = () => {
   const mineTypeDict = {
     ".js": "application/javascript",
     ".mjs": "application/javascript",
+    ".json": "application/json",
     ".html": "text/html",
     ".css": "text/css",
+    ".txt": "text/plain",
     ".ico": "image/x-icon",
   };
 
@@ -35,6 +37,9 @@ const createHttpServerWithWSServer = () => {
 
     let extName = path.extname(filePath);
     let contentType = mineTypeDict[extName];
+    if(contentType == null || contentType == undefined){
+      contentType="text/plain";
+    }
     // 设置响应头，指定内容类型和编码
     res.setHeader("Server", "icedog");
     res.setHeader("Content-Type", contentType);
@@ -74,12 +79,22 @@ const createHttpServerWithWSServer = () => {
       );
     });
 
-    webSocket.on("message", (bufferData, isBinary) => {
-      let data = bufferData.toString();
+    // 每条连接独立的处理队列：上一个消息处理完（含 await），才处理下一个
+    let messageQueue = Promise.resolve();
+    const handleMessage = async (data) => {
       console.log(
         `[${tool.getDateNowText()}] 收到 WebSocket 客户端消息：${data}`
       );
-      let dataJson = JSON.parse(data);
+      await tool.delay(Math.random() * 10);
+      let dataJson;
+      try {
+        dataJson = JSON.parse(data);
+      } catch (error) {
+        console.error(
+          `[${tool.getDateNowText()}] 消息不是合法 JSON，已忽略：${data}`
+        );
+        return;
+      }
       dataJson.from = "server";
       dataJson.index += 1;
       if (dataJson.message == "[close]") {
@@ -94,6 +109,18 @@ const createHttpServerWithWSServer = () => {
           webSocket.send(JSON.stringify(dataJson));
         }, 1000);
       }
+    };
+
+    webSocket.on("message", (bufferData, isBinary) => {
+      const data = bufferData.toString();
+      messageQueue = messageQueue
+        .then(() => handleMessage(data))
+        .catch((error) => {
+          console.error(
+            `[${tool.getDateNowText()}] 处理消息发生错误：`,
+            error
+          );
+        });
     });
 
     webSocket.on("close", (code, reason) => {

@@ -45,8 +45,32 @@ $("#send").addEventListener("click", () => {
       message.message
     }`
   );
-  wsClient.send(JSON.stringify(message));
+  // wsClient.send(JSON.stringify(message));
+  wsClient.send("123,.;[");
   writeHistory(`[${tool.getDateNowText()}]客户端发送消息成功`);
+});
+
+$("#send-seq").addEventListener("click", () => {
+  if (wsClient == null) {
+    writeHistory(`[${tool.getDateNowText()}]请先连接服务器`);
+    return;
+  }
+  writeHistory(`[${tool.getDateNowText()}]开始按顺序发送 msg1~msg8`);
+  for (let i = 1; i <= 8; i++) {
+    setTimeout(() => {
+      let message = {
+        message: `msg${i}`,
+        from: "client",
+        index: ++messageIndex,
+      };
+      writeHistory(
+        `[${message.index}][${tool.getDateNowText()}][${message.from}] message:${
+          message.message
+        }`
+      );
+      wsClient.send(JSON.stringify(message));
+    }, i * 300);
+  }
 });
 
 $("#send-close").addEventListener("click", () => {
