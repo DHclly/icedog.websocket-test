@@ -15,6 +15,7 @@
     "t07s": "node test07/server.js",
     "t08s": "node test08/server.js",
     "t09s": "node test09/server.js",
+    "t10s": "node test10/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
