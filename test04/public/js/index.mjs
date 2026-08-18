@@ -1,59 +1,101 @@
-import tool from 'js/tool';
+import tool from "js/tool";
+const $ = (domSelector) => document.querySelector(domSelector);
+
+let wsClient = null;
+let messageIndex = 0;
+const writeHistory = (message) => {
+  const history = $("#history-list");
+  const historyItem = document.createElement("li");
+  historyItem.textContent = message;
+  history.appendChild(historyItem);
+};
+
+$("#connect").addEventListener("click", () => {
+  if (wsClient != null) {
+    writeHistory(`[${tool.getDateNowText()}]已经连接服务器成功`);
+    return;
+  }
+  writeHistory(`[${tool.getDateNowText()}]连接服务器中...`);
+  const wsUrl = $("#wsUrl").value;
+  wsClient = createWSClient(wsUrl);
+});
+
+$("#disconnect").addEventListener("click", () => {
+  writeHistory(`[${tool.getDateNowText()}]客户端断开服务器连接成功`);
+  if (wsClient != null) {
+    wsClient.close(3001, "client close");
+  }
+});
+
+$("#send").addEventListener("click", () => {
+  if (wsClient == null) {
+    writeHistory(`[${tool.getDateNowText()}]请先连接服务器`);
+    return;
+  }
+
+  writeHistory(`[${tool.getDateNowText()}]消息发送中...`);
+  let messageText = $("#input").value;
+  let message = {
+    message: messageText,
+    from: "client",
+    index: ++messageIndex,
+  };
+  writeHistory(
+    `[${message.index}][${tool.getDateNowText()}][${message.from}] message:${
+      message.message
+    }`
+  );
+  wsClient.send(JSON.stringify(message));
+  writeHistory(`[${tool.getDateNowText()}]客户端发送消息成功`);
+});
+
+$("#send-close").addEventListener("click", () => {
+  $("#input").value = "[close]";
+  $("#send").click();
+});
+
+$("#clear").addEventListener("click", () => {
+  $("#history-list").innerHTML = "";
+  writeHistory(`[${tool.getDateNowText()}]历史记录已清空`);
+});
 
 /**
  * 创建发送文本消息的 ws 客户端
  */
-const createWSClient = () => {
+const createWSClient = (wsUrl) => {
+  const webSocket = new WebSocket(wsUrl);
 
-    let dataIdx = 1;
-    const wsUrl = 'ws://localhost:3000';
-    const webSocket = new WebSocket(wsUrl);
+  webSocket.addEventListener("error", (event) => {
+    writeHistory(
+      `[${tool.getDateNowText()}]ws 通讯发生了错误，错误信息`,
+      event
+    );
+  });
 
-    /**
-     * 发送消息到服务端
-     */
-    const sendMessage = () => {
-        let data = {
-            type: "client",
-            data: dataIdx,
-            fromServer: false,
-        }
-        dataIdx++;
+  webSocket.addEventListener("open", (event) => {
+    writeHistory(`[${tool.getDateNowText()}]服务器连接成功`);
+  });
 
-        webSocket.send(JSON.stringify(data));
-    }
+  webSocket.addEventListener("close", (event) => {
+    wsClient = null;
+    messageIndex = 0;
+    writeHistory(
+      `[${tool.getDateNowText()}] ws 链接关闭,code:${event.code},reason:${
+        event.reason
+      }`
+    );
+  });
 
-    webSocket.addEventListener('error', (event) => {
-        console.error(`[${tool.getDateNowText()}]ws 通讯发生了错误，错误信息`, event)
-    });
-
-    webSocket.addEventListener('open', (event) => {
-        console.log(`[${tool.getDateNowText()}] WebSocket 客户端开启`);
-        console.log(`[${tool.getDateNowText()}] 向服务端发送消息`);
-        sendMessage();
-    });
-
-    webSocket.addEventListener('close', (event) => {
-        console.log(`[${tool.getDateNowText()}] WebSocket 客户端关闭,code:${event.code},reason:${event.reason}`);
-    });
-
-    webSocket.addEventListener('message', (event) => {
-        let data = event.data;
-        console.log(`[${tool.getDateNowText()}] 收到WebSocket 服务端消息：${data}`);
-
-        if (dataIdx > 3) {
-            console.log(`[${tool.getDateNowText()}] 和服务端通讯了 3 次，关闭通讯`);
-            webSocket.close(3001,"client close");
-            return;
-        }
-
-        console.log(`[${tool.getDateNowText()}] 向服务端发送消息`);
-        setTimeout(() => {
-            sendMessage();
-        }, 100);
-    });
-
-    console.log(`[${tool.getDateNowText()}] ws 客户端启动成功`);
-}
-
-createWSClient();
+  webSocket.addEventListener("message", (event) => {
+    let messageBody = event.data;
+    let message = JSON.parse(messageBody);
+    messageIndex = message.index;
+    writeHistory(`[${tool.getDateNowText()}]收到服务端消息`);
+    writeHistory(
+      `[${message.index}][${tool.getDateNowText()}][${message.from}] message:${
+        message.message
+      }`
+    );
+  });
+  return webSocket;
+};

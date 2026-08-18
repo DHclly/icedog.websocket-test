@@ -34,7 +34,7 @@ const getDateNowText = () => {
     let date = new Date();
     let year = date.getFullYear();
     let month = fillZero(date.getMonth() + 1);
-    let day = fillZero(date.getDay());
+    let day = fillZero(date.getDate());
     let hour = fillZero(date.getHours());
     let minute = fillZero(date.getMinutes());
     let second = fillZero(date.getSeconds());

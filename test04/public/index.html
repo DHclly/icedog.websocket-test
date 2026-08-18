@@ -1,23 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ws 服务 和 http 服务集成测试</title>
     <link href="./css/index.css" type="text/css" rel="stylesheet" />
-</head>
-<body>
+  </head>
+  <body>
     <div id="app">
-        <div class="title">ws 服务 和 http 服务集成测试</div>
-        <div class="desc">请按 F12 查看控制台</div>
+      <div class="title">ws 服务 和 http 服务集成测试</div>
+      <div class="desc">输入[close] (包含方括号)服务器主动关闭链接 </div>
+      <hr>
+      <div class="input-content">
+        <div>ws 地址：</div>
+        <div>
+          <input
+            type="text"
+            name="url"
+            id="wsUrl"
+            placeholder="请输入 ws 服务地址"
+            value="ws://localhost:3000"
+            style="width: 500px;"
+          />
+        </div>
+        <hr>
+        <div>
+          发送内容：
+        </div>
+        <div><textarea
+          name="input"
+          id="input"
+          rows="10"
+          cols="50"
+          value="hello, ws 服务"
+        >hello, ws 服务</textarea></div>
+        <hr>
+        <div>
+          <button id="connect">连接 ws 服务</button>
+          <button id="disconnect">断开 ws 服务</button>
+        </div>
+        <hr>
+        <div><button id="send">发送</button></div>
+        <div><button id="send-close">发送服务端断开链接指令</button></div>
+      </div>
+      <hr>
+      <div class="history">
+        <div class="operation">
+          <button id="clear">清空历史记录</button>
+        </div>
+        <div class="history-content" id="history">
+          <ul id="history-list"></ul>
+        </div>
+      </div>
     </div>
     <script type="importmap">
-        {
-          "imports": {
-            "js/tool":"./js/tool.mjs"
-          }
+      {
+        "imports": {
+          "js/tool": "./js/tool.mjs"
         }
-      </script>
+      }
+    </script>
     <script src="js/index.mjs" type="module"></script>
-</body>
+  </body>
 </html>
