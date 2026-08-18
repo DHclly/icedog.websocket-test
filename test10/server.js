@@ -17,7 +17,7 @@ const createHttpServerWithWSServer = () => {
   const mineTypeDict = {
     ".js": "application/javascript",
     ".mjs": "application/javascript",
-    ".html": "text.html",
+    ".html": "text/html",
     ".css": "text/css",
     ".ico": "image/x-icon",
   };
